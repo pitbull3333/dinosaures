@@ -4,7 +4,7 @@ import Search from "../components/Search.tsx"
 import dinos from "../data/dino.json"
 import "../styles/variable.css"
 import "../styles/home.css"
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL
 
 function Home(){
     const [lengthFilter, setLengthFilter] = useState<string[]>([])

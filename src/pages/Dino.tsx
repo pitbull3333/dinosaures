@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import LanguageSelector from "../components/LanguageSelector"
 import dinos from "../data/dino.json"
 import "../styles/dino.css"
+const base = import.meta.env.BASE_URL
 
 function Dino(){
     const { name } = useParams()
@@ -18,7 +19,7 @@ function Dino(){
         <>
             <main id="main-dino">
                 <LanguageSelector />
-                <img src={`/images/dinosaures/${displayedDino?.name}.jpg`} alt={displayedDino?.name} />
+                <img src={`${base}images/dinosaures/${displayedDino?.name}.jpg`} alt={displayedDino?.name} />
                 <p>{displayedDino?.name}</p>
                 <p>{t(displayedDino?.diet?? "")}</p>
                 <p>{parseFloat((displayedDino?.length ?? "").replace("m", ""))} m</p>
