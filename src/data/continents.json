@@ -1,0 +1,37 @@
+{
+  "europe": [
+    "england",
+    "spain",
+    "germany",
+    "france",
+    "belgium",
+    "romania"
+  ],
+  "africa": [
+    "south africa",
+    "egypt",
+    "niger",
+    "tanzania",
+    "madagascar",
+    "lesotho"
+  ],
+  "asia": [
+    "mongolia",
+    "china",
+    "kazakhstan",
+    "japan",
+    "india"
+  ],
+  "oceanie": [
+    "australia",
+    "antarctica"
+  ],
+  "northAmerica": [
+    "usa",
+    "canada"
+  ],
+  "southAmerica": [
+    "argentina",
+    "brazil"
+  ]
+}

@@ -1,5 +1,7 @@
 :root{
     --color-background:rgb(197, 155, 99);
+    --color-border: black;
+    --size-border: 0.1rem;
     /*--police_montserrat:montserrat;
     --police_source_sans3:source_sans3;*/
 }

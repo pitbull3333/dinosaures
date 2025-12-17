@@ -1,17 +1,23 @@
-import { FormControl, Select, MenuItem, Checkbox, ListItemText, TextField, InputLabel } from "@mui/material";
+import { FormControl, Select, MenuItem, Checkbox, ListItemText, TextField, InputLabel } from "@mui/material"
+import Button from '@mui/material/Button'
 import { useTranslation } from "react-i18next"
 import LanguageSelector from "../components/LanguageSelector"
+import continentsData from "../data/continents.json"
 import "../styles/search.css"
 
 type SearchProps = {
+    continents: string[] 
     lengthFilter: string[]
     periods: string[]
     diets: string[]
+    search: string
+    setContinents: React.Dispatch<React.SetStateAction<string[]>>
     setLengthFilter: React.Dispatch<React.SetStateAction<string[]>>
     setPeriods: React.Dispatch<React.SetStateAction<string[]>>
     setDiets: React.Dispatch<React.SetStateAction<string[]>>
     setSearch: React.Dispatch<React.SetStateAction<string>>
 }
+const optionsContinents = Object.keys(continentsData)
 const optionsLength = [
     { value: "0-1", range: [0,1] },
     { value: "1-2", range: [1,2] },
@@ -26,16 +32,27 @@ const optionsLength = [
 const optionsPeriod = ["late triassic","early jurassic","mid jurassic","late jurassic", "early cretaceous","late cretaceous"]
 const optionsDiet = ["herbivorous","carnivorous","omnivorous"]
 
-function Search({lengthFilter, setLengthFilter, periods, setPeriods, diets, setDiets, setSearch}: SearchProps){
+function Search({continents, setContinents, lengthFilter, setLengthFilter, periods, setPeriods, diets, setDiets, search, setSearch}: SearchProps){
     const { t } = useTranslation()
 
+    const resetFilter = () => {
+        setContinents([])
+        setLengthFilter([])
+        setPeriods([])
+        setDiets([])
+        setSearch("")
+    }
+    const ListContinents = (event: any) => {
+        const value = event.target.value as string[]
+        setContinents(value)
+    }
     const ListInputPeriods = (event: any) => {
         const value = event.target.value as string[]
-        setPeriods(value);
+        setPeriods(value)
     }
     const ListInputDiet = (event: any) => {
         const value = event.target.value as string[]
-        setDiets(value);
+        setDiets(value)
     }
     const TextInput = (event: any) => {
         setSearch(event.target.value)
@@ -44,14 +61,33 @@ function Search({lengthFilter, setLengthFilter, periods, setPeriods, diets, setD
     return (
         <>
             <section id="filtered">
-                <FormControl variant="outlined" size="small" sx={{width: "7vw"}}>
-                    <InputLabel>Longeur</InputLabel>
+                <FormControl variant="outlined" size="small" sx={{width: "11vw"}}>
+                    <InputLabel>{t("location")}</InputLabel>
                     <Select
-                        label="Longeur"
+                        label={t("location")}
+                        multiple
+                        value={continents}
+                        onChange={ListContinents}
+                        renderValue={(selected) => (selected as string[]).map(v => t(v)).join(", ")}
+                        sx={{textAlign: "center"}}
+                    >
+                        {optionsContinents.map((option) => (
+                            <MenuItem key={option} value={option} sx={{p: 0}}>
+                                <Checkbox checked={continents.includes(option)} sx={{m: 0, paddingLeft: 0}} />
+                                <ListItemText primary={t(option)} sx={{flex: "unset"}} />
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl variant="outlined" size="small" sx={{width: "7vw"}}>
+                    <InputLabel>{t("length")}</InputLabel>
+                    <Select
+                        label={t("length")}
                         multiple
                         value={lengthFilter}
                         onChange={(e) => setLengthFilter(e.target.value as string[])}
-                        renderValue={(selected) => (selected as string[]).map(v => optionsLength.find(o => o.value === v)?.value).join(", ")}
+                        renderValue={(selected) => (selected as string[]).map(value => t(value)).join(", ")}
                         sx={{textAlign: "center"}}
                     >
                         {optionsLength.map(option => (
@@ -63,13 +99,13 @@ function Search({lengthFilter, setLengthFilter, periods, setPeriods, diets, setD
                     </Select>
                 </FormControl>
                 <FormControl variant="outlined" size="small" sx={{width: "12vw"}}>
-                    <InputLabel>Période</InputLabel>
+                    <InputLabel>{t("period")}</InputLabel>
                     <Select
-                        label="Période"
+                        label={t("period")}
                         multiple
                         value={periods}
                         onChange={ListInputPeriods}
-                        renderValue={(selected) => (selected as string[]).map(value => optionsPeriod.find(p => p === value)).join(", ")}
+                        renderValue={(selected) => (selected as string[]).map(v => t(v)).join(", ")}
                         sx={{textAlign: "center"}}
                     >
                         {optionsPeriod.map((option) => (
@@ -81,13 +117,13 @@ function Search({lengthFilter, setLengthFilter, periods, setPeriods, diets, setD
                     </Select>
                 </FormControl>
                 <FormControl variant="outlined" size="small" sx={{width: "11vw"}}>
-                    <InputLabel>Régime alimentaire</InputLabel>
+                    <InputLabel>{t("diet")}</InputLabel>
                     <Select
-                        label="Régime alimentaire"
+                        label={t("diet")}
                         multiple
                         value={diets}
                         onChange={ListInputDiet}
-                        renderValue={(selected) => (selected as string[]).map(value => optionsDiet.find(d => d === value)).join(", ")}
+                        renderValue={(selected) => (selected as string[]).map(v => t(v)).join(", ")}
                         sx={{textAlign: "center"}}
                     >
                         {optionsDiet.map((option) => (
@@ -98,7 +134,8 @@ function Search({lengthFilter, setLengthFilter, periods, setPeriods, diets, setD
                         ))}
                     </Select>
                 </FormControl>
-                <TextField sx={{input:{textAlign: "center"}}} label="Recherche dinosore" variant="outlined" size="small" onChange={TextInput} />
+                <TextField sx={{input:{textAlign: "center"}}} label={t("search")} variant="outlined" size="small" value={search} onChange={TextInput} />
+                <Button variant="contained" onClick={() => resetFilter()}>{t("reset")}</Button>
                 <LanguageSelector />
             </section>
         </>
