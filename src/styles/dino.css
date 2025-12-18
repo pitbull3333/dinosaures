@@ -76,8 +76,8 @@
         }
         img{
             width:4rem;
-            margin-left: 1rem;
             aspect-ratio: 1 / 1;
+            margin-left: 1rem;
             mix-blend-mode: multiply;
         }
     }
@@ -96,7 +96,8 @@
     flex-direction: column;
     justify-content: center;
     align-items:center;
-    img{
+    > img{
+        height: 20rem;
         mix-blend-mode: multiply;
     }
     > p{

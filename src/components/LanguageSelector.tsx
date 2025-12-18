@@ -13,7 +13,7 @@ export default function LanguageSelector() {
     }
 
   return (
-    <Select id="select-langage" size="small" value={i18n.language} onChange={handleChange} sx={{ width: "8.2vw", height: "4vh"}}>
+    <Select id="select-langage" size="small" value={i18n.language} onChange={handleChange} sx={{width:{xs: "8.2vw", sm: "8.2vw"}, height:{xs: "4vh", sm: "4vh"}}}>
       <MenuItem value="fr">
         <Box sx={{display: "flex", alignItems: "center"}}>
           <img className="img-flags" src={`${base}images/flags/fr.svg`} alt="" />Français
